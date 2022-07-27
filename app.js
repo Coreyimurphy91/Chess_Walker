@@ -65,9 +65,46 @@ function movementHandler(e) { // e just means event (what keydown recognizes)
     switch(e.key) {
         case 'r': 
             keys.r.pressed = true;
-            knight.x -= 10;
-        break;
+            knight.x += 228;
+            knight.y -= 114;
+                break;
+        case 'f': 
+            keys.r.pressed = true;
+            knight.x += 228;
+            knight.y += 114;
+                break;
+        case 'c': 
+            keys.r.pressed = true;
+            knight.x += 114;
+            knight.y += 228;
+                break;
+        case 'x': 
+            keys.r.pressed = true;
+            knight.x -= 114;
+            knight.y += 228;
+                break;
+        case 'a': 
+            keys.r.pressed = true;
+            knight.x -= 228;
+            knight.y += 114;
+                break;
+        case 'q': 
+            keys.r.pressed = true;
+            knight.x -= 228;
+            knight.y -= 114;
+                break;
+        case '2': 
+            keys.r.pressed = true;
+            knight.x -= 114;
+            knight.y -= 228;
+                break;
+        case '3': 
+            keys.r.pressed = true;
+            knight.x += 114;
+            knight.y -= 228;
+                break;
     }
+    
 }
 
 const keys = {
