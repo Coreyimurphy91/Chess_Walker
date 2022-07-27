@@ -16,6 +16,12 @@ const kPiece = document.getElementById('kPiece');
 const bgBlack = document.getElementById('bgBlack');
 const bgWhite = document.getElementById('bgWhite');
 
+// EVENT LISTENERS
+window.addEventListener('DOMContentLoaded', function() {
+
+    const runGame = setInterval(gameLoop, 60);
+});
+
 
 // ---------------- Canvas Rendering ----------  //
 canvas.width = 840;
@@ -46,33 +52,63 @@ knight = new Player(365, 365, kPiece, 100, 100);
 bgBlacksquare = new Player(0, 0, bgBlack, 840, 840)
 bgWhitesquare = new Player(0, 0, bgWhite, 840, 840)
 
-bgWhitesquare.render();
-bgBlacksquare.render();
-knight.render();
 
 
-function gameLoop() {
-    // clear the canvas
-    ctx.clearRect(0, 0, game.width, game.height);
-    // check to see if shrek is alive
-    if (knight.alive) {
-        // render shrek
-        knight.render();
-
-        // @todo - check for collision
-        // let hit = detectHit(donkey, shrek);
-    }
-
-}
 
 
 // ---------------- Movement ------------ //
+document.addEventListener('keydown', movementHandler);
+
 function movementHandler(e) { // e just means event (what keydown recognizes)
     console.log('movement', e.key)
 
     switch(e.key) {
         case 'r': 
-            knight.x = 365 && knight.y = 365 ? (knight.x -= 40) && (knight.x -= 15) : null;
+            keys.r.pressed = true;
+            knight.x -= 10;
         break;
     }
+}
+
+const keys = {
+    2: {
+        pressed: false
+    },
+    3: {
+        pressed: false
+    },
+    q: {
+        pressed: false
+    },
+    r: {
+        pressed: false
+    },
+    a: {
+        pressed: false
+    },
+    f: {
+        pressed: false
+    },
+    x: {
+        pressed: false
+    },
+    c: {
+        pressed: false
+    }
+};
+
+function gameLoop() {
+    // Call window.requestAnimationFrame() and pass in animate to refresh the canvas constantly
+    window.requestAnimationFrame(gameLoop)
+    // check to see if shrek is alive
+    if (knight.alive) {
+        // render shre
+        // bgWhitesquare.render();
+        bgBlacksquare.render();
+        knight.render();
+        // @todo - check for collision
+        // let hit = detectHit(donkey, shrek);
+     
+    }
+
 }
