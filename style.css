@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital@1&display=swap');
+
 html,body {
     margin: 0;
     padding: 0;
@@ -6,21 +8,23 @@ html,body {
   body {
     padding-top: 1em;
     text-align: center;
-    background-color: rgb(210, 177, 140);
+    background-image: url(./images/darkwood.jpg);
     background-size: cover;
     background-repeat: space;
   }
   
   h1, h2 {
-    font-family: 'Press Start 2P', monospace;
+    font-family: 'Merriweather', serif;
+    font-size: 4em;;
     /* font-family: monospace; */
-    color: goldenrod;
+    color: rgb(210, 177, 140)
   }
   
   canvas {
     /* background-image: url(./images/KWBackground.png); */
     /* background-repeat: repeat; */
     background-color: #222;
+    border: double black 5px;
 
     width: 100%;
     height: 100%;
@@ -30,23 +34,26 @@ html,body {
   #container {
   max-width: 50em;
   /* height: 70vh; */
-  background-color: rgb(111, 12, 32);
+  background-color: rgba(210, 177, 140, 0);
+  justify-content: space-between;
   margin: 0 auto;
   padding: 1em;
   display: grid;
   grid-gap: 1em;
-  grid-template-rows: .25fr .5fr .25fr;
-  grid-template-columns: .25fr .5fr .25fr;
-  grid-template-areas: "top-left top-left top-right"
-                        "game game game"
-                        "btm-left btm-right btm-right";
+  /* grid-template-rows: .5fr .5fr; */
+  grid-template-columns: .5fr .5fr;
+  grid-template-areas: "top-left top-left"
+                        "game game"
+                        "btm-left btm-right";
   }
   
   #top-left, #top-right, #btm-left, #btm-right {
     display: flex;
+    height: 100px;
     justify-content: center;
     align-items: center;
-    background-color: #222;
+    background-color: rgba(210, 177, 140, .25);
+    border: solid black 5px;
   }
   
   #top-left {

@@ -65,43 +65,75 @@ function movementHandler(e) { // e just means event (what keydown recognizes)
     switch(e.key) {
         case 'r': 
             keys.r.pressed = true;
-            knight.x += 228;
-            knight.y -= 114;
+            if (knight.x < 590 && knight.y > 30) {
+                knight.x += 228;
+                knight.y -= 114;
+            } // solved
+            // knight.x < 590 ? (knight.x += 228) : null;
+            // knight.y > 252 ? (knight.y -= 114) : null;
                 break;
         case 'f': 
             keys.r.pressed = true;
-            knight.x += 228;
-            knight.y += 114;
+            if (knight.x < 590 && knight.y < 700) {
+                knight.x += 228;
+                knight.y += 114;
+            } // solved
+            // knight.x < 590 ? (knight.x += 228) : null;
+            // knight.y < 478 ? (knight.y += 114) : null;
                 break;
         case 'c': 
             keys.r.pressed = true;
-            knight.x += 114;
-            knight.y += 228;
+            if (knight.x < 700 && knight.y < 590) {
+                knight.x += 114;
+                knight.y += 228;
+            } // solved
+            // knight.x += 114;
+            // knight.y += 228;
                 break;
         case 'x': 
             keys.r.pressed = true;
-            knight.x -= 114;
-            knight.y += 228;
+            if (knight.x > 130 && knight.y < 590) {
+                knight.x -= 114;
+                knight.y += 228;
+            } // solved
+            // knight.x -= 114;
+            // knight.y += 228;
                 break;
         case 'a': 
             keys.r.pressed = true;
-            knight.x -= 228;
-            knight.y += 114;
+            if (knight.x > 250 && knight.y < 700 ) {
+                knight.x -= 228;
+                knight.y += 114;
+            } // solved
+            // knight.x -= 228;
+            // knight.y += 114;
                 break;
         case 'q': 
             keys.r.pressed = true;
-            knight.x -= 228;
-            knight.y -= 114;
+            if (knight.x > 250 && knight.y > 30) {
+                knight.x -= 228;
+                knight.y -= 114;
+            } // solved
+            // knight.x -= 228;
+            // knight.y -= 114;
                 break;
         case '2': 
             keys.r.pressed = true;
-            knight.x -= 114;
-            knight.y -= 228;
+            if (knight.x > 30 && knight.y > 140) {
+                knight.x -= 114;
+                knight.y -= 228;
+            } // solved
+            // knight.x -= 114;
+            // knight.y -= 228;
                 break;
         case '3': 
             keys.r.pressed = true;
-            knight.x += 114;
-            knight.y -= 228;
+            if (knight.x < 700 && knight.y > 140) {
+                knight.x += 114;
+                knight.y -= 228;
+            } // solved
+            // knight.x += 114;
+            // knight.y -= 228;
                 break;
     }
     
