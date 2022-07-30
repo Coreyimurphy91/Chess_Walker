@@ -12,15 +12,17 @@
       <img src="./images/KWBGB.jpg" alt="bgBlack" id="bgBlack" style="display: none">
       <img src="./images/KWBGW.jpg" alt="bgWhite" id="bgWhite" style="display: none">
       <img src="./images/horse.png" alt="knight" id="kPiece" style="display: none">
+      <img src="./images/guide.jpg" alt="guide" id="help" style="display: none">
       </div>
       <div id="container">
         <aside id="top-left"><h2>Knight Dance</h2></aside>
-        <aside id="top-right"><h2 id="movement"></h2></aside>
         <main>
             <canvas id="canvas"><!-- play it, a game --></canvas>
+            <aside id="helpMenu" style="display:none">test</aside>
+            
         </main>
         <aside id="btm-left"><h2 id="score">0</h2></aside>
-        <aside id="btm-right"><h2 id="status">TBD</h2></aside>
+        <aside id="btm-right"><h2 id="popup" onclick="startGame()"></h2>How to Dance</h2></aside>
       </div>
 
     <script src="app.js"></script>
