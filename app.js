@@ -1,9 +1,9 @@
-// GLOBAL DOM / VARIABLES
+// -------------- GLOBAL DOM / VARIABLES ------ //
 console.log('Knight Walker');
 const map = document.querySelector('.map');
 const movement = document.getElementById('movement');
 const canvas = document.getElementById('canvas');
-const status = document.getElementById('status');
+const score = document.getElementById('score');
 const ctx = canvas.getContext('2d'); //creates a 2D canvas
 const beginClick = document.getElementById('btm-right');
 let startClick = false;
@@ -11,13 +11,15 @@ let knight;
 let rook;
 let bishop;
 let queen;
-let king;
 
 // ---------------- Images -------------------  //
 const kPiece = document.getElementById('kPiece');
 const bgBlack = document.getElementById('bgBlack');
 const bgWhite = document.getElementById('bgWhite');
 const startMenuImg = document.getElementById('help');
+const wRook = document.getElementById('wRook');
+const wBishop = document.getElementById('wBishop');
+const wQueen = document.getElementById('wQueen');
 // const startMenu = new Image ();
 // startMenu.src = 'images/guide.png';
 // const img = document.createElement('img');
@@ -26,11 +28,9 @@ const startMenuImg = document.getElementById('help');
 // ---------------- EVENT LISTENERS ----------  //
 window.addEventListener('DOMContentLoaded', function() {
 
-    // const beginGame = setInterval(startGame, 60);
+    // const beginGame = setInterval(startGame, 60); OLD START
     const rungame = setInterval(gameLoop, 60);
 });
-
-// window.addEventListener('click', )
 
 // ---------------- Canvas Rendering ----------  //
 canvas.width = 840;
@@ -46,14 +46,7 @@ document.getElementById('btm-right').onmousedown = function() {
 document.getElementById('btm-right').onmouseleave = function() {
     document.getElementById('btm-right').style.color = 'rgb(210, 177, 140)';
     document.getElementById('btm-right').style.backgroundColor = 'rgba(210, 177, 140, .25)';
-    // guide.style.display = "none";
-    // document.querySelector('body').removeChild(img);
 }
-// function guideFunction() {
-//     const popup = document.getElementById("myPopup");
-//     popup.classList.toggle("show");
-//   }
-
 
 // ---------------- Entities ------------------  //
 
@@ -73,6 +66,20 @@ class Player {
     }
 }
 
+class Opponent {
+    constructor(x, y, image, width, height) {
+        this.x = x,
+        this.y = y
+        this.width = width
+        this.height = height
+        this.image = image;
+
+        this.render = function() {
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
+        }
+    }
+}
+
 class BackgroundImg {
     constructor(x, y, image, width, height) {
         this.x = x,
@@ -80,7 +87,6 @@ class BackgroundImg {
         this.width = width
         this.height = height
         this.image = image;
-        this.alive = true;
 
         this.render = function() {
             ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
@@ -92,16 +98,14 @@ knight = new Player(365, 370, kPiece, 100, 100);
 bgBlacksquare = new BackgroundImg(0, 0, bgBlack, 840, 840)
 bgWhitesquare = new BackgroundImg(0, 0, bgWhite, 840, 840)
 bgStartMenu = new BackgroundImg(0, 0, startMenuImg, 840, 840)
-
-// imggg = new Player(0,0, img, 840, 840)
-
+rook = new Opponent(39, 35, wRook, 65, 80)
+bishop = new Opponent (78, 35, wBishop, 70, 90)
+queen = new Opponent (117, 30, wQueen, 80, 100)
 
 
 
 
 // ---------------- Movement ------------ //
-document.addEventListener('keydown', movementHandler);
-
 function movementHandler(e) { // e just means event (what keydown recognizes)
     console.log('movement', e.key)
 
@@ -124,7 +128,7 @@ function movementHandler(e) { // e just means event (what keydown recognizes)
             // knight.x < 590 ? (knight.x += 228) : null;
             // knight.y < 478 ? (knight.y += 114) : null;
                 break;
-        case 'c': 
+        case 'f': 
             // keys.c.pressed = true;
             if (knight.x < 700 && knight.y < 595) {
                 knight.x += 114;
@@ -133,7 +137,7 @@ function movementHandler(e) { // e just means event (what keydown recognizes)
             // knight.x += 114;
             // knight.y += 228;
                 break;
-        case 'x': 
+        case 'a': 
             // keys.x.pressed = true;
             if (knight.x > 130 && knight.y < 595) {
                 knight.x -= 114;
@@ -160,7 +164,7 @@ function movementHandler(e) { // e just means event (what keydown recognizes)
             // knight.x -= 228;
             // knight.y -= 114;
                 break;
-        case '2': 
+        case 'q': 
             // keys.2.pressed = true;
             if (knight.x > 30 && knight.y > 145) {
                 knight.x -= 114;
@@ -169,7 +173,7 @@ function movementHandler(e) { // e just means event (what keydown recognizes)
             // knight.x -= 114;
             // knight.y -= 228;
                 break;
-        case '3': 
+        case 'r': 
             // keys.3.pressed = true;
             if (knight.x < 700 && knight.y > 145) {
                 knight.x += 114;
@@ -182,33 +186,91 @@ function movementHandler(e) { // e just means event (what keydown recognizes)
     
 }
 
-const keys = {
-    2: {
-        pressed: false
-    },
-    3: {
-        pressed: false
-    },
-    w: {
-        pressed: false
-    },
-    e: {
-        pressed: false
-    },
-    s: {
-        pressed: false
-    },
-    d: {
-        pressed: false
-    },
-    x: {
-        pressed: false
-    },
-    c: {
-        pressed: false
-    }
-};
 
+// ---------------- Game Functions ------- //
+
+// function to increase score until failure
+function scoreUp() {
+    // while (knight.alive === true) {
+        let addingScore = Number(score.textContent) + 1;
+        score.textContent = addingScore;
+    // }
+}
+
+// function to remove start-guide and begin game
+beginClick.addEventListener('click', function readyToPlay() {
+    // debugger;
+    startClick = true;
+    console.log(startClick);
+    setInterval(scoreUp, 100);
+}) 
+
+// main game loop
+function gameLoop() {
+    // Call window.requestAnimationFrame() and pass in animate to refresh the canvas constantly
+    window.requestAnimationFrame(gameLoop)
+    bgStartMenu.render();
+    // check to see if knight is alive
+    if (startClick === true) {
+        document.addEventListener('keydown', movementHandler); // listen for movement
+        // bgWhitesquare.render();
+        bgBlacksquare.render();
+        // imggg.render();
+        knight.render();
+        // @todo - check for collision
+        // let hit = detectHit(donkey, shrek);
+        rook.render();
+        bishop.render();
+        queen.render();
+        // scoreUp();
+    } else {
+        bgStartMenu.render();
+    }
+
+}
+
+
+
+
+// ---------------- Unused Code ----------  //
+// const keys = {
+    //     2: {
+    //         pressed: false
+    //     },
+    //     3: {
+    //         pressed: false
+    //     },
+    //     w: {
+    //         pressed: false
+    //     },
+    //     e: {
+    //         pressed: false
+    //     },
+    //     s: {
+    //         pressed: false
+    //     },
+    //     d: {
+    //         pressed: false
+    //     },
+    //     x: {
+    //         pressed: false
+    //     },
+    //     c: {
+    //         pressed: false
+    //     }
+    // };
+
+    // Old Menu image calling
+    // guide.style.display = "none";
+    // document.querySelector('body').removeChild(img);
+// }
+// function guideFunction() {
+//     const popup = document.getElementById("myPopup");
+//     popup.classList.toggle("show");
+//   }
+
+
+// Unnecessary start loop/function
 // function startGame() {
 //     if (startClick = false) {
 //         // animateStartGame();
@@ -218,32 +280,3 @@ const keys = {
 //         gameLoop();
 //     }
 // }
-console.log(startClick);
-
-beginClick.addEventListener('click', function readyToPlay() {
-    // debugger;
-    startClick = true;
-
-    console.log(startClick);
-}) 
-
-
-function gameLoop() {
-    // Call window.requestAnimationFrame() and pass in animate to refresh the canvas constantly
-    window.requestAnimationFrame(gameLoop)
-    bgStartMenu.render();
-    // check to see if knight is alive
-    if (startClick === true) {
-        // render shre
-        // bgWhitesquare.render();
-        bgBlacksquare.render();
-        // imggg.render();
-        knight.render();
-        // @todo - check for collision
-        // let hit = detectHit(donkey, shrek);
-     
-    } else {
-        bgStartMenu.render();
-    }
-
-}
