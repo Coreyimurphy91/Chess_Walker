@@ -4,11 +4,9 @@ const map = document.querySelector('.map');
 const movement = document.getElementById('movement');
 const canvas = document.getElementById('canvas');
 const status = document.getElementById('status');
-const startMenuImg = document.getElementById('help');
 const ctx = canvas.getContext('2d'); //creates a 2D canvas
-const img = document.createElement('img');
-const startMenu = new Image ();
-startMenu.src = 'images/guide.png';
+const beginClick = document.getElementById('btm-right');
+let startClick = false;
 let knight;
 let rook;
 let bishop;
@@ -19,14 +17,20 @@ let king;
 const kPiece = document.getElementById('kPiece');
 const bgBlack = document.getElementById('bgBlack');
 const bgWhite = document.getElementById('bgWhite');
+const startMenuImg = document.getElementById('help');
+// const startMenu = new Image ();
+// startMenu.src = 'images/guide.png';
+// const img = document.createElement('img');
+
 
 // ---------------- EVENT LISTENERS ----------  //
 window.addEventListener('DOMContentLoaded', function() {
 
-    // const startGame = setInterval(gameMenu, 60);
+    // const beginGame = setInterval(startGame, 60);
     const rungame = setInterval(gameLoop, 60);
 });
 
+// window.addEventListener('click', )
 
 // ---------------- Canvas Rendering ----------  //
 canvas.width = 840;
@@ -36,21 +40,20 @@ canvas.height = 840;
 document.getElementById('btm-right').onmousedown = function() {
     document.getElementById('btm-right').style.color = 'rgb(44, 77, 114)';
     document.getElementById('btm-right').style.backgroundColor = 'rgba(210, 177, 140, .15)';
-    guide.style.display = "inline";
-    document.querySelector('body').appendChild(img);
+    // guide.style.display = "inline";
+    // document.querySelector('body').appendChild(img);
 }
 document.getElementById('btm-right').onmouseleave = function() {
     document.getElementById('btm-right').style.color = 'rgb(210, 177, 140)';
     document.getElementById('btm-right').style.backgroundColor = 'rgba(210, 177, 140, .25)';
-    guide.style.display = "none";
-    document.querySelector('body').removeChild(img);
+    // guide.style.display = "none";
+    // document.querySelector('body').removeChild(img);
 }
-function guideFunction() {
-    const popup = document.getElementById("myPopup");
-    popup.classList.toggle("show");
-  }
+// function guideFunction() {
+//     const popup = document.getElementById("myPopup");
+//     popup.classList.toggle("show");
+//   }
 
-// ---------------- Event Listeners -----------  //
 
 // ---------------- Entities ------------------  //
 
@@ -70,10 +73,27 @@ class Player {
     }
 }
 
+class BackgroundImg {
+    constructor(x, y, image, width, height) {
+        this.x = x,
+        this.y = y
+        this.width = width
+        this.height = height
+        this.image = image;
+        this.alive = true;
+
+        this.render = function() {
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
+        }
+    }
+}
+
 knight = new Player(365, 370, kPiece, 100, 100);
-bgBlacksquare = new Player(0, 0, bgBlack, 840, 840)
-bgWhitesquare = new Player(0, 0, bgWhite, 840, 840)
-imggg = new Player(0,0, img, 840, 840)
+bgBlacksquare = new BackgroundImg(0, 0, bgBlack, 840, 840)
+bgWhitesquare = new BackgroundImg(0, 0, bgWhite, 840, 840)
+bgStartMenu = new BackgroundImg(0, 0, startMenuImg, 840, 840)
+
+// imggg = new Player(0,0, img, 840, 840)
 
 
 
@@ -189,16 +209,31 @@ const keys = {
     }
 };
 
-function startGame() {
-    window.requestAnimationFrame(gameMenu)
-    imggg.render();
-}
+// function startGame() {
+//     if (startClick = false) {
+//         // animateStartGame();
+//         requestAnimationFrame(startGame);
+//         bgStartMenu.render();
+//     } else {
+//         gameLoop();
+//     }
+// }
+console.log(startClick);
+
+beginClick.addEventListener('click', function readyToPlay() {
+    // debugger;
+    startClick = true;
+
+    console.log(startClick);
+}) 
+
 
 function gameLoop() {
     // Call window.requestAnimationFrame() and pass in animate to refresh the canvas constantly
     window.requestAnimationFrame(gameLoop)
+    bgStartMenu.render();
     // check to see if knight is alive
-    if (knight.alive) {
+    if (startClick === true) {
         // render shre
         // bgWhitesquare.render();
         bgBlacksquare.render();
@@ -207,6 +242,8 @@ function gameLoop() {
         // @todo - check for collision
         // let hit = detectHit(donkey, shrek);
      
+    } else {
+        bgStartMenu.render();
     }
 
 }
