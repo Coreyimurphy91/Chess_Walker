@@ -6,11 +6,17 @@ const canvas = document.getElementById('canvas');
 const score = document.getElementById('score');
 const ctx = canvas.getContext('2d'); //creates a 2D canvas
 const beginClick = document.getElementById('btm-right');
+// const moveArrayOrthag = [114, -114]
+let lastMove = new Date().getTime();
 let startClick = false;
+let captureByR = false;
+let captureByB = false;
+let captureByQ = false;
 let knight;
-let rook;
+let rook1, rook2, rook3, rook4, rook5, rook6, rook7, rookA, rookB, rookC, rookD, rookE, rookF, rookG;
 let bishop;
 let queen;
+let player3;
 
 // ---------------- Images -------------------  //
 const kPiece = document.getElementById('kPiece');
@@ -66,19 +72,57 @@ class Player {
     }
 }
 
+const gravity = 1.5;
+
 class Opponent {
-    constructor(x, y, image, width, height) {
+    constructor(x, y, image, width, height, type) {
         this.x = x,
         this.y = y
         this.width = width
         this.height = height
         this.image = image;
+        this.type = type;
+        this.direction = 114;
 
         this.render = function() {
-            ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        }
+
+        // this.move = function() {
+        //     requestAnimationFrame(() => {
+        //         if(this.type === 'orthag'){
+        //             if(Math.floor(Math.random()* 2) == 0) {
+        //                 this.x += this.direction;
+        //             } else {
+        //                 this.y += this.direction;
+        //             }
+        //             } else if (this.type === 'diag') {
+        //                 this.x += moveArrayOrthag[Math.floor(Math.random()* 2)];
+        //                 this.y += moveArrayOrthag[Math.floor(Math.random()* 2)];
+        //             } else if (this.type === 'omni') {
+        //                 this.x += moveArrayOrthag[Math.floor(Math.random()* 2)];
+        //         }
+        //     } )
+        // }
+        this.move = function() {
+            requestAnimationFrame(() => {
+                if(this.type === 'right'){
+                    if(this.x < 1500) {
+                        this.x += this.direction;
+                    } else {
+                        this.x = x;
+                    }
+                    } else if(this.type === 'left'){
+                    if(this.x > -1500) {
+                        this.x -= this.direction;
+                    } else {
+                        this.x = x;
+                    }
+            }})
         }
     }
 }
+
 
 class BackgroundImg {
     constructor(x, y, image, width, height) {
@@ -95,13 +139,19 @@ class BackgroundImg {
 }
 
 knight = new Player(365, 370, kPiece, 100, 100);
-bgBlacksquare = new BackgroundImg(0, 0, bgBlack, 840, 840)
-bgWhitesquare = new BackgroundImg(0, 0, bgWhite, 840, 840)
-bgStartMenu = new BackgroundImg(0, 0, startMenuImg, 840, 840)
-rook = new Opponent(39, 35, wRook, 65, 80)
-bishop = new Opponent (78, 35, wBishop, 70, 90)
-queen = new Opponent (117, 30, wQueen, 80, 100)
-
+bgBlacksquare = new BackgroundImg(0, 0, bgBlack, 840, 840);
+bgWhitesquare = new BackgroundImg(0, 0, bgWhite, 840, 840);
+bgStartMenu = new BackgroundImg(0, 0, startMenuImg, 840, 840);
+rook1 = new Opponent(-529, 721, wRook, 65, 80, 'right');
+rook2 = new Opponent(-187, 607, wRook, 65, 80, 'right');
+rook3 = new Opponent(1067, 493, wRook, 65, 80, 'left');
+rook4 = new Opponent(-985, 379, wRook, 65, 80, 'right');
+rook5 = new Opponent(1295, 265, wRook, 65, 80, 'left');
+rook6 = new Opponent(1523, 151, wRook, 65, 80, 'left');
+rook7 = new Opponent(-415, 37, wRook, 65, 80, 'right');
+bishop = new Opponent (152, 33, wBishop, 70, 90, 'diag');
+queen = new Opponent (262, 28, wQueen, 80, 100, 'omni');
+// player3 = new Player2 (); // OhZ
 
 
 
@@ -185,27 +235,55 @@ function movementHandler(e) { // e just means event (what keydown recognizes)
     }
     
 }
+// ---------------- Hit Test ------------- //
+function detectHit(player, computer) {
+    let hitTest = 
+        player.y + player.height > computer.y && 
+        player.y < computer.y + computer.height && // BOOLEAN
+        player.x + player.width > computer.x &&  // CONDITION
+        player.x < computer.x + computer.width;
 
+        if (hitTest) {
+            setTimeout(gameLoop, 0);
+            
+        }
+
+}
 
 // ---------------- Game Functions ------- //
 
-// function to increase score until failure
-function scoreUp() {
-    // while (knight.alive === true) {
-        let addingScore = Number(score.textContent) + 1;
-        score.textContent = addingScore;
-    // }
+console.log(captureByQ);
+// Determine which piece captured the knight
+function whoTook() {
+    // debugger;
+    if (detectHit(knight, rook1)) {
+        captureByR = true;
+    } 
+    if (detectHit(knight, bishop)){
+        captureByB = true;
+    }
+    if (detectHit(knight, queen)){{
+        captureByQ = true;
+    }
+}
 }
 
-// function to remove start-guide and begin game
+// Function to increase score until failure
+function scoreUp() {
+        let addingScore = Number(score.textContent) + 1;
+        score.textContent = addingScore;
+}
+
+// Function to remove start-guide and begin game
 beginClick.addEventListener('click', function readyToPlay() {
     // debugger;
     startClick = true;
     console.log(startClick);
-    setInterval(scoreUp, 100);
+    setInterval(scoreUp, 400);
+    whoTook();
 }) 
 
-// main game loop
+// Main game loop
 function gameLoop() {
     // Call window.requestAnimationFrame() and pass in animate to refresh the canvas constantly
     window.requestAnimationFrame(gameLoop)
@@ -219,14 +297,28 @@ function gameLoop() {
         knight.render();
         // @todo - check for collision
         // let hit = detectHit(donkey, shrek);
-        rook.render();
+        const currentTime = new Date().getTime();
+        if (lastMove + 400 < currentTime) {
+            rook1.move(), rook2.move(), rook3.move(), rook4.move(), rook5.move(), rook6.move(), rook7.move();
+            bishop.move();
+            queen.move();
+            lastMove = currentTime;
+        }
+        rook1.render(), rook2.render(), rook3.render(), rook4.render(), rook5.render(), rook6.render(), rook7.render();
         bishop.render();
         queen.render();
-        // scoreUp();
+        let captureR1 = detectHit(knight, rook1);
+        let captureR2 = detectHit(knight, rook2);
+        let captureR3 = detectHit(knight, rook3);
+        let captureR4 = detectHit(knight, rook4);
+        let captureR5 = detectHit(knight, rook5);
+        let captureR6 = detectHit(knight, rook6);
+        let captureR7 = detectHit(knight, rook7);
+        let captureB = detectHit(knight, bishop);
+        let captureQ = detectHit(knight, queen);
     } else {
         bgStartMenu.render();
     }
-
 }
 
 
@@ -280,3 +372,10 @@ function gameLoop() {
 //         gameLoop();
 //     }
 // }
+
+//Joel's math for sporadic movement.
+//     } else if (this.type === 'diag') {
+                //         this.x += moveArrayOrthag[Math.floor(Math.random()* 2)];
+                //         this.y += moveArrayOrthag[Math.floor(Math.random()* 2)];
+                //     } else if (this.type === 'omni') {
+                //         this.x += moveArrayOrthag[Math.floor(Math.random()* 2)];
