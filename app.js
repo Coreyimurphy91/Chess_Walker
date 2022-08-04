@@ -338,11 +338,15 @@ beginClick.addEventListener('click', function readyToPlay() {
     // whoTook();
 }) 
 
-function endGame() {
-    if(captureByR === true) {
-        bgStartMenu.render();
-    }
-}
+// function endGame() {
+//     if(captureByR === true) {
+//         bgStartMenu.render();
+//     } else if (captureByB === true) {
+
+//     } else {
+
+//     }
+// }
 
 // Main game loop
 function gameLoop() {
