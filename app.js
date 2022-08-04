@@ -6,6 +6,7 @@ const canvas = document.getElementById('canvas');
 const score = document.getElementById('score');
 const ctx = canvas.getContext('2d'); //creates a 2D canvas
 const beginClick = document.getElementById('btm-right');
+const playAgain = document.getElementById('retry');
 // const moveArrayOrthag = [114, -114]
 let lastMove = new Date().getTime();
 let lastQueen = new Date().getTime();
@@ -27,6 +28,7 @@ const startMenuImg = document.getElementById('help');
 const wRook = document.getElementById('wRook');
 const wBishop = document.getElementById('wBishop');
 const wQueen = document.getElementById('wQueen');
+const capByR = document.getElementById('capByR');
 // const startMenu = new Image ();
 // startMenu.src = 'images/guide.png';
 // const img = document.createElement('img');
@@ -47,13 +49,20 @@ canvas.height = 840;
 document.getElementById('btm-right').onmousedown = function() {
     document.getElementById('btm-right').style.color = 'rgb(44, 77, 114)';
     document.getElementById('btm-right').style.backgroundColor = 'rgba(210, 177, 140, .15)';
-    // guide.style.display = "inline";
-    // document.querySelector('body').appendChild(img);
 }
 document.getElementById('btm-right').onmouseleave = function() {
     document.getElementById('btm-right').style.color = 'rgb(210, 177, 140)';
     document.getElementById('btm-right').style.backgroundColor = 'rgba(210, 177, 140, .25)';
 }
+document.getElementById('retry').onmousedown = function() {
+    document.getElementById('retry').style.color = 'rgb(44, 77, 114)';
+    document.getElementById('retry').style.backgroundColor = 'rgba(210, 177, 140, .15)';
+    location.reload();
+}
+// document.getElementById('retry').onmouseover = function() {
+//     document.getElementById('retry').style.color = 'rgb(44, 77, 114)';
+//     document.getElementById('retry').style.backgroundColor = 'rgba(210, 177, 140, .15)';
+// }
 
 // ---------------- Entities ------------------  //
 
@@ -178,6 +187,7 @@ knight = new Player(365, 370, kPiece, 100, 100);
 bgBlacksquare = new BackgroundImg(0, 0, bgBlack, 840, 840);
 bgWhitesquare = new BackgroundImg(0, 0, bgWhite, 840, 840);
 bgStartMenu = new BackgroundImg(0, 0, startMenuImg, 840, 840);
+captureRLoss = new BackgroundImg(0, 0, capByR, 840, 840);
 
 // Enemy pieces
 rook1 = new Opponent(-529, 721, wRook, 65, 80, 'right', 'rook');
@@ -338,15 +348,16 @@ beginClick.addEventListener('click', function readyToPlay() {
     // whoTook();
 }) 
 
-// function endGame() {
-//     if(captureByR === true) {
-//         bgStartMenu.render();
-//     } else if (captureByB === true) {
+function endGame() {
+    if(captureByR === true) {
+        captureRLoss.render();
+        document.getElementById('retry').style.display = 'flex';
+    } else if (captureByB === true) {
+        
+    } else {
 
-//     } else {
-
-//     }
-// }
+    }
+}
 
 // Main game loop
 function gameLoop() {
