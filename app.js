@@ -29,6 +29,8 @@ const wRook = document.getElementById('wRook');
 const wBishop = document.getElementById('wBishop');
 const wQueen = document.getElementById('wQueen');
 const capByR = document.getElementById('capByR');
+const capByB = document.getElementById('capByB');
+const capByQ = document.getElementById('capByQ');
 // const startMenu = new Image ();
 // startMenu.src = 'images/guide.png';
 // const img = document.createElement('img');
@@ -188,6 +190,8 @@ bgBlacksquare = new BackgroundImg(0, 0, bgBlack, 840, 840);
 bgWhitesquare = new BackgroundImg(0, 0, bgWhite, 840, 840);
 bgStartMenu = new BackgroundImg(0, 0, startMenuImg, 840, 840);
 captureRLoss = new BackgroundImg(0, 0, capByR, 840, 840);
+captureBLoss = new BackgroundImg(0, 0, capByB, 840, 840);
+captureQLoss = new BackgroundImg(0, 0, capByQ, 840, 840);
 
 // Enemy pieces
 rook1 = new Opponent(-529, 721, wRook, 65, 80, 'right', 'rook');
@@ -352,10 +356,15 @@ function endGame() {
     if(captureByR === true) {
         captureRLoss.render();
         document.getElementById('retry').style.display = 'flex';
+        // lastMove = new Date().getTime() + 8000;
     } else if (captureByB === true) {
-        
-    } else {
-
+        captureBLoss.render();
+        document.getElementById('retry').style.display = 'flex';
+        // opponentArray.position = 0;
+    } else if (captureByQ === true) {
+        captureQLoss.render();
+        document.getElementById('retry').style.display = 'flex';
+        // opponentArray.position = 0;
     }
 }
 
