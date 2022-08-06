@@ -8,7 +8,7 @@ Originally, I wanted to make a more exploratory game where the knight searches a
 
 From there, I added the bishop, rook, and queen. Their movements were orthagonal, so I chose to make the queen a bit faster to show her power on the board. The rooks move left and right (originally I had more going up and down, but it was overwhelming). The bishops move on their diagonals.
 
-The main functions were using hit detect to reset computer pieces hitting eachother, as well as the player hit detect to end the game and give the player their final score.
+Some rough spots were getting the pieces to move appropriately on the board, using the DOM to change the canvas scenery, and using functions to cancel out other running functions. I was able to remove all the bugs from my code, but this still feels like a beta to what could be a more flushed out game. In further iterations, I'd like to create a trailing effect from the enemy pieces to give the player a better idea of where the pieces are coming from. For now, they must focus a little harder to determine that. Another option would be during each interval, have the pieces(as well as the player) move from point A to B with an animation - I tried this, but could not troubleshoot the detectHit function. It would trigger when pieces slid accross diagonally from eachother, even if they didn't technically land on the same square. Lastly, I think I'd like to create a more consistent increase in difficulty as time elapses.
 
 
 # Wire-frame for initial ideas:
