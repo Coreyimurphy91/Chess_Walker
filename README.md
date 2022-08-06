@@ -35,7 +35,8 @@ Some rough spots were getting the pieces to move appropriately on the board, usi
 |  Sound  |  The start game sound, moving sound, and game over sound  |
 
 # app.js
-```// -------------- GLOBAL DOM / VARIABLES ------ //
+```js
+// -------------- GLOBAL DOM / VARIABLES ------ //
 const map = document.querySelector('.map');
 const movement = document.getElementById('movement');
 const canvas = document.getElementById('canvas');
@@ -688,7 +689,7 @@ function gameLoop() {
 // }
 ```
 # index.html
-```
+``` html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -727,7 +728,7 @@ function gameLoop() {
 </html>
 ```
 # style.css
-```
+``` css
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital@1&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Teko&display=swap');
 
