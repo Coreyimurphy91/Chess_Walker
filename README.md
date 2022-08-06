@@ -848,6 +848,6 @@ html,body {
 1. Go to repository on Github my profile
 2. Fork and clone the repository
 3. Clone to your local machine
- ```git clone https://github.com/coreyimurphy91/knight_walker.git```
+ ```git clone https://github.com/coreyimurphy91/knight-dance.git```
 4. Go to the project directory
 5. Open index.html in your prefered browser
