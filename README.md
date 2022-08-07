@@ -1,5 +1,7 @@
 # Knight Dance
 
+Play the game -- https://coreyimurphy91.github.io/Knight-Dance/ -- Play the game
+
 This game was designed to be focused around the knight from chess. Having the most unique movement, I thought it would be fun to allow players to experience playing solely as a knight, escaping capture from the other minor and major pieces.
 
 This game was created using HTML, CSS, and JavaScript. The earliest stages began by inputing a chessboard-like grid onto the JavaScript canvas element. From there, I experimented with different types of key-binds for moving the knight sprite around.
